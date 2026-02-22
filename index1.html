@@ -1,0 +1,1030 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GrowthForce JA – Digital Growth Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --dark: #0f0f0f;
+    --card: #141414;
+    --gold: #C9A84C;
+    --gold-light: #E8C86D;
+    --gold-dim: rgba(201,168,76,0.15);
+    --white: #F5F0E8;
+    --muted: #888;
+    --green: #2ECC71;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 1.5rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.1em;
+    color: var(--white);
+  }
+
+  .logo span { color: var(--gold); }
+
+  nav ul {
+    list-style: none;
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav ul a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  nav ul a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold);
+    color: var(--black) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 5% 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 40%, rgba(201,168,76,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(201,168,76,0.05) 0%, transparent 60%);
+  }
+
+  .hero-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 9rem);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.4s;
+  }
+
+  .hero h1 em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 2.5rem;
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 500px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.6s;
+  }
+
+  .hero-actions {
+    margin-top: 3rem;
+    display: flex;
+    gap: 1.2rem;
+    align-items: center;
+    opacity: 0;
+    animation: fadeUp 0.9s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--black);
+    padding: 1rem 2.2rem;
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-ghost {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-ghost:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* MARQUEE */
+  .marquee-section {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 1.2rem 0;
+    overflow: hidden;
+    background: var(--dark);
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 3rem;
+    animation: scroll 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .marquee-track span {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+
+  .marquee-track span.dot { color: var(--gold); }
+
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 7rem 5%;
+  }
+
+  .section-label {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title em {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  /* PROBLEM SECTION */
+  .problem {
+    background: var(--dark);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .problem-text p {
+    margin-top: 1.5rem;
+    color: var(--muted);
+    line-height: 1.8;
+    font-size: 1rem;
+  }
+
+  .problem-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+
+  .problem-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .problem-list .icon {
+    color: var(--gold);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .big-stat {
+    text-align: center;
+    padding: 3rem;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    background: var(--gold-dim);
+  }
+
+  .big-stat .number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 7rem;
+    line-height: 1;
+    color: var(--gold);
+    display: block;
+  }
+
+  .big-stat p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* PACKAGES */
+  .packages { background: var(--black); }
+
+  .packages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .pkg-card {
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2.5rem 2rem;
+    background: var(--card);
+    position: relative;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .pkg-card:hover {
+    border-color: rgba(201,168,76,0.4);
+    transform: translateY(-4px);
+  }
+
+  .pkg-card.featured {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, #141414, #1a1508);
+  }
+
+  .pkg-badge {
+    position: absolute;
+    top: -1px;
+    right: 2rem;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.8rem;
+    border-radius: 0 0 3px 3px;
+  }
+
+  .pkg-tier {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .pkg-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .pkg-tagline {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 2rem;
+    line-height: 1.5;
+  }
+
+  .pkg-price {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .pkg-price .setup {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    color: var(--white);
+  }
+
+  .pkg-price .setup span {
+    font-size: 1rem;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+  }
+
+  .pkg-price .monthly {
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-top: 0.3rem;
+  }
+
+  .pkg-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .pkg-features li {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .pkg-features li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+  }
+
+  .pkg-btn {
+    width: 100%;
+    padding: 0.9rem;
+    border: 1px solid rgba(201,168,76,0.4);
+    background: transparent;
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+  }
+
+  .pkg-btn:hover { background: var(--gold); color: var(--black); }
+
+  .pkg-card.featured .pkg-btn {
+    background: var(--gold);
+    color: var(--black);
+  }
+
+  .pkg-card.featured .pkg-btn:hover { background: var(--gold-light); }
+
+  /* NICHES */
+  .niches { background: var(--dark); }
+
+  .niches-intro {
+    max-width: 600px;
+    color: var(--muted);
+    margin-top: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .niches-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-top: 4rem;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .niche-item {
+    padding: 2rem 1.5rem;
+    background: var(--card);
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    border: 1px solid rgba(255,255,255,0.04);
+    transition: background 0.2s;
+  }
+
+  .niche-item:hover { background: rgba(201,168,76,0.06); }
+
+  .niche-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+
+  .niche-item h4 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+  }
+
+  .niche-item p {
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  /* HOW IT WORKS */
+  .process { background: var(--black); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-top: 4rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute;
+    top: 2.5rem;
+    left: 12%;
+    right: 12%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    opacity: 0.3;
+  }
+
+  .step {
+    text-align: center;
+    padding: 1rem;
+  }
+
+  .step-num {
+    width: 5rem;
+    height: 5rem;
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin: 0 auto 1.5rem;
+    background: var(--card);
+    position: relative;
+    z-index: 1;
+  }
+
+  .step h4 {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.7rem;
+  }
+
+  .step p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* RESULTS / PROOF */
+  .results { background: var(--dark); }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .result-card {
+    padding: 2.5rem 2rem;
+    background: var(--card);
+    border-left: 3px solid var(--gold);
+    border-radius: 2px;
+  }
+
+  .result-card .metric {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .result-card h4 {
+    font-size: 0.95rem;
+    margin: 0.8rem 0 0.5rem;
+  }
+
+  .result-card p {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    background: var(--gold);
+    padding: 6rem 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: 'GROW';
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20rem;
+    color: rgba(0,0,0,0.06);
+    bottom: -3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    pointer-events: none;
+    letter-spacing: 0.1em;
+    white-space: nowrap;
+  }
+
+  .cta-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    color: var(--black);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-section p {
+    color: rgba(0,0,0,0.6);
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.7;
+  }
+
+  .btn-dark {
+    background: var(--black);
+    color: var(--gold);
+    padding: 1.1rem 2.8rem;
+    border: none;
+    border-radius: 2px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    letter-spacing: 0.05em;
+    transition: background 0.2s;
+  }
+
+  .btn-dark:hover { background: #111; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 3rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  footer .logo { font-size: 1.4rem; }
+
+  footer p {
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+
+  footer .footer-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  footer .footer-links a {
+    font-size: 0.8rem;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer .footer-links a:hover { color: var(--gold); }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    z-index: 200;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    animation: pulse 2s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+
+  .wa-float:hover { transform: scale(1.1); }
+
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 35px rgba(37,211,102,0.7); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav ul { display: none; }
+    .problem { grid-template-columns: 1fr; gap: 3rem; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .niches-grid { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    .steps::before { display: none; }
+    .results-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 600px) {
+    .niches-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Growth<span>Force</span> JA</div>
+  <ul>
+    <li><a href="#problem">The Problem</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#niches">Industries</a></li>
+    <li><a href="#process">How It Works</a></li>
+    <li><a href="#contact" class="nav-cta">Get Started</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div style="position:relative">
+    <p class="hero-label">Jamaica's #1 Digital Growth Agency</p>
+    <h1>We Don't Build <em>Websites.</em> We Build Customers.</h1>
+    <p class="hero-sub">We build digital systems that generate 20–50 extra calls every month for Jamaican businesses. Real results. Proven system.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Get More Customers →</a>
+      <a href="#packages" class="btn-ghost">See Our Packages</a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>TOWING COMPANIES</span><span class="dot">✦</span>
+    <span>AC REPAIR</span><span class="dot">✦</span>
+    <span>CONSTRUCTION</span><span class="dot">✦</span>
+    <span>CLEANING SERVICES</span><span class="dot">✦</span>
+    <span>PEST CONTROL</span><span class="dot">✦</span>
+    <span>REAL ESTATE</span><span class="dot">✦</span>
+    <span>ROOFING</span><span class="dot">✦</span>
+    <span>SECURITY COMPANIES</span><span class="dot">✦</span>
+    <span>CAR RENTAL</span><span class="dot">✦</span>
+    <span>CONTRACTORS</span><span class="dot">✦</span>
+    <!-- Duplicate for seamless loop -->
+    <span>TOWING COMPANIES</span><span class="dot">✦</span>
+    <span>AC REPAIR</span><span class="dot">✦</span>
+    <span>CONSTRUCTION</span><span class="dot">✦</span>
+    <span>CLEANING SERVICES</span><span class="dot">✦</span>
+    <span>PEST CONTROL</span><span class="dot">✦</span>
+    <span>REAL ESTATE</span><span class="dot">✦</span>
+    <span>ROOFING</span><span class="dot">✦</span>
+    <span>SECURITY COMPANIES</span><span class="dot">✦</span>
+    <span>CAR RENTAL</span><span class="dot">✦</span>
+    <span>CONTRACTORS</span><span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- PROBLEM SECTION -->
+<section class="problem" id="problem">
+  <div class="problem-text">
+    <p class="section-label">The Reality</p>
+    <h2 class="section-title">Your Competitors Are Already <em>Winning Online</em></h2>
+    <p>Most Jamaican businesses are leaving serious money on the table every single day. Your phone should be ringing. It's not — because customers can't find you.</p>
+    <ul class="problem-list">
+      <li><span class="icon">→</span><span>You're not showing up on Google when customers search for your service</span></li>
+      <li><span class="icon">→</span><span>You have no way to track how many customers you're losing every month</span></li>
+      <li><span class="icon">→</span><span>Your competitors are running ads while you rely on word of mouth</span></li>
+      <li><span class="icon">→</span><span>A bad or missing online presence is costing you thousands in lost revenue</span></li>
+    </ul>
+  </div>
+  <div>
+    <div class="big-stat">
+      <span class="number">97%</span>
+      <p>of customers search online before calling a business. If you're not there, they call your competitor.</p>
+    </div>
+    <div class="big-stat" style="margin-top:1.5rem; border-color:rgba(255,255,255,0.08); background: var(--card);">
+      <span class="number" style="color:var(--green);">5–10</span>
+      <p>extra customer calls per month is all it takes to fully pay for your digital system — and then some.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages" id="packages">
+  <p class="section-label">Our Solutions</p>
+  <h2 class="section-title">Choose Your <em>Growth Level</em></h2>
+
+  <div class="packages-grid">
+    <!-- Starter -->
+    <div class="pkg-card">
+      <p class="pkg-tier">Starter</p>
+      <h3 class="pkg-name">Online Presence</h3>
+      <p class="pkg-tagline">Perfect for small local businesses ready to be found online.</p>
+      <div class="pkg-price">
+        <div class="setup">$45K–$65K <span>setup</span></div>
+        <div class="monthly">+ $7,000–$12,000/month management</div>
+      </div>
+      <ul class="pkg-features">
+        <li>1–3 Page Mobile-Optimized Website</li>
+        <li>WhatsApp Click-to-Chat Button</li>
+        <li>Google Business Profile Setup</li>
+        <li>Basic SEO Optimization</li>
+        <li>Call Tracking & Analytics</li>
+        <li>Hosting Included</li>
+      </ul>
+      <a href="#contact" class="pkg-btn">Get Started</a>
+    </div>
+
+    <!-- Growth (featured) -->
+    <div class="pkg-card featured">
+      <div class="pkg-badge">Most Popular</div>
+      <p class="pkg-tier">Growth</p>
+      <h3 class="pkg-name">Lead Machine</h3>
+      <p class="pkg-tagline">For serious businesses ready to dominate their local market.</p>
+      <div class="pkg-price">
+        <div class="setup">$90K–$150K <span>setup</span></div>
+        <div class="monthly">+ $25,000–$45,000/month management</div>
+      </div>
+      <ul class="pkg-features">
+        <li>5–7 Page Premium Website</li>
+        <li>Full SEO Optimization</li>
+        <li>Google Ads Management</li>
+        <li>Facebook & Instagram Ads</li>
+        <li>WhatsApp Automation</li>
+        <li>Custom Landing Pages</li>
+        <li>Monthly Analytics Reports</li>
+      </ul>
+      <a href="#contact" class="pkg-btn">Get Started</a>
+    </div>
+
+    <!-- Domination -->
+    <div class="pkg-card">
+      <p class="pkg-tier">Domination</p>
+      <h3 class="pkg-name">Market Leader</h3>
+      <p class="pkg-tagline">Own your parish. Leave no room for competition.</p>
+      <div class="pkg-price">
+        <div class="setup">$180K–$300K <span>setup</span></div>
+        <div class="monthly">+ $60,000–$120,000/month management</div>
+      </div>
+      <ul class="pkg-features">
+        <li>Full Website System</li>
+        <li>Advanced Parish-Level SEO</li>
+        <li>Google Ads + Meta Ads + Retargeting</li>
+        <li>Reputation Management System</li>
+        <li>Video Ad Production</li>
+        <li>Social Media Management</li>
+        <li>Competitor Monitoring</li>
+      </ul>
+      <a href="#contact" class="pkg-btn">Get Started</a>
+    </div>
+  </div>
+
+  <p style="text-align:center; margin-top:2rem; color:var(--muted); font-size:0.8rem;">All prices in JMD. Flexible payment plans available. Ad budget paid directly by client.</p>
+</section>
+
+<!-- NICHES -->
+<section class="niches" id="niches">
+  <p class="section-label">Who We Serve</p>
+  <h2 class="section-title">We Specialize In <em>High-Value</em> Service Businesses</h2>
+  <p class="niches-intro">We work with businesses where each customer is worth serious money. One extra job pays for your entire month of marketing.</p>
+
+  <div class="niches-grid">
+    <div class="niche-item">
+      <span class="niche-icon">🚗</span>
+      <div>
+        <h4>Towing & Wreckers</h4>
+        <p>$15,000–$40,000 per job. 5 extra calls = massive ROI.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">❄️</span>
+      <div>
+        <h4>AC Repair Companies</h4>
+        <p>High-ticket service calls. Repeat customers. Easy ROI.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🏗️</span>
+      <div>
+        <h4>Construction & Contractors</h4>
+        <p>Large contracts. Clients search Google before calling.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🧹</span>
+      <div>
+        <h4>Cleaning Companies</h4>
+        <p>Recurring clients. One contract = months of revenue.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🐛</span>
+      <div>
+        <h4>Pest Control</h4>
+        <p>Urgent need = calls you capture. Be first on Google.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🏠</span>
+      <div>
+        <h4>Real Estate Agents</h4>
+        <p>One listing or sale covers 12 months of marketing.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🔒</span>
+      <div>
+        <h4>Security Companies</h4>
+        <p>Commercial contracts worth hundreds of thousands.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🚙</span>
+      <div>
+        <h4>Car Rental</h4>
+        <p>Tourists search online. Be there when they land.</p>
+      </div>
+    </div>
+    <div class="niche-item">
+      <span class="niche-icon">🏚️</span>
+      <div>
+        <h4>Roofing Companies</h4>
+        <p>Hurricane season drives urgent online searches daily.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="process" id="process">
+  <p class="section-label">The Process</p>
+  <h2 class="section-title">How We Get You <em>Results</em></h2>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Discovery Call</h4>
+      <p>We learn your business, your goals, and exactly where you're losing customers online right now.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Build Your System</h4>
+      <p>We build your website, set up Google, run your ads, and install full call tracking within 2 weeks.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Drive Customers</h4>
+      <p>Your phone starts ringing. We optimize everything monthly to keep growing your results.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Prove It Monthly</h4>
+      <p>Every month you get a full report: calls generated, leads tracked, money attributable to us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section class="results">
+  <p class="section-label">Why It Works</p>
+  <h2 class="section-title">The Numbers <em>Don't Lie</em></h2>
+
+  <div class="results-grid">
+    <div class="result-card">
+      <div class="metric">20–50</div>
+      <h4>Extra Calls Per Month</h4>
+      <p>Our clients consistently generate 20–50 additional inbound customer calls per month through our system.</p>
+    </div>
+    <div class="result-card">
+      <div class="metric">72hrs</div>
+      <h4>Average First Results</h4>
+      <p>Most clients see their first new customer inquiry within 72 hours of launching their Google Ads campaign.</p>
+    </div>
+    <div class="result-card">
+      <div class="metric">1 per parish</div>
+      <h4>Exclusive Partnerships</h4>
+      <p>We only work with ONE business per industry per parish. Your competitors cannot hire us while you're a client.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2>Ready To Grow?</h2>
+  <p>Book a free 30-minute strategy call. We'll show you exactly how many customers you're currently losing — and how to fix it.</p>
+  <a href="https://wa.me/1876XXXXXXX?text=Hi,%20I%20want%20to%20grow%20my%20business%20online" class="btn-dark">Book Free Strategy Call →</a>
+  <p style="margin-top:1.5rem; font-size:0.8rem; color:rgba(0,0,0,0.45);">No obligation. No tech jargon. Just growth.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Growth<span>Force</span> JA</div>
+  <p>© 2025 GrowthForce JA. Serving all parishes of Jamaica.</p>
+  <ul class="footer-links">
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#niches">Industries</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/1876XXXXXXX?text=Hi,%20I%20want%20more%20customers%20for%20my%20business" class="wa-float" title="Chat on WhatsApp">💬</a>
+
+</body>
+</html>
